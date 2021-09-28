@@ -73,17 +73,56 @@ $(function () {
 
 
 
-        $("#searchIcon").click(() => {
-            $("#nicCodeModal").modal("show");
-        });
+    $("#searchIcon").click(() => {
+        $("#nicCodeModal").modal("show");
+        let searchKey = event.target.value;
+        ajaxCall(searchKey);
+    });
 
-        $("#searchField1").keypress(function (e) {
-            if (e.keyCode == 13) {
-                $("#nicCodeModal").modal("show");
-            }
-        });
-           
+    $("#searchField1").keypress(function (e) {
+        if (e.keyCode == 13) {
+            $("#nicCodeModal").modal("show");
+            let searchKey = event.target.value;
+            ajaxCall(searchKey);
+        }
+    });
+
+    
+
 });
+
+function ajaxCall(searchKey) {
+    const endpoint = `https://jsonplaceholder.typicode.com/albums`;
+    $.ajax({
+        url: endpoint,
+        type: 'GET',
+        success: function (data) {
+            $('#fetchedDataTable').dataTable({
+                oLanguage: {
+                    "sSearch": ""
+                },
+                data: data,
+                columns: [
+                    {
+                        data: "id",
+                        render: function (data, type, row, meta) {
+                            return ` <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="tableCheck${data}">
+                            <label class="form-check-label" for="tableCheck${data}"> ${data}</label>
+                        </div> `;
+                        },
+                    },
+                    { 'data': 'title' },
+                ]
+            })
+            
+        },
+        complete: function() {
+            $('.dataTables_filter input').val(searchKey);
+            $('.dataTables_filter input').keyup();
+        }
+    })
+}
 
 $(".datepicker").datepicker({
     dateFormat: 'dd/mm/yy',
@@ -113,33 +152,17 @@ $(function () {
     })
 });
 
-const endpoint = 'https://jsonplaceholder.typicode.com/albums';
 
-$(document).ready(function() {
-    $.ajax({
-        url: endpoint,
-        type: 'GET',
-        success: function(data) {
-            let fetchedData = '';
-            $.each(data, function(ind, val) {
-                '<tbody>'
-                fetchedData += '<tr>';
-                fetchedData += '<th>'+ val.id +'</th>';
-                fetchedData += '<th>'+ val.title +'</th>';
-                fetchedData += '</tr>'
-                '</tbody>'
-            })
-            $('#suggestions').append(fetchedData)
+
+$(document).ready(function () {
+   
+
+    $(".search-input-form").scroll(function () {
+        var scroll = $('.search-input-form').scrollTop();
+        if (scroll >= 10) {
+            $(".modal-add-btn").addClass("darkHeader");
+        } else {
+            $(".modal-add-btn").removeClass("darkHeader");
         }
-    })
-
-
-        $('#searchfieldModal').on('keyup', function(){
-            var value = $(this).val().toLowerCase();
-            $('#suggestions tr').filter(function(){
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            })
-        })
-
-
+    });
 })
