@@ -11,6 +11,10 @@ body {
     opacity: 1;
 }
 
+.navbar-nav {
+    width: 100%;
+}
+
 .navbar-toggler {
     border-color: #ffffff;
 }
