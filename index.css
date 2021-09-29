@@ -615,7 +615,7 @@ input[type=file] {
     background: #127ABF 0% 0% no-repeat padding-box;
     opacity: 1;
     position: absolute;
-    top: 3.3rem;
+    top: 1.8rem;
     right: 2rem;
 }
 
@@ -670,6 +670,65 @@ input[type="search"] {
 input[type="search"]:focus-visible {
     outline: none !important;
 }
+
+#fetchedDataTable_wrapper table.dataTable thead .sorting_asc,
+.sorting {
+    background-image: none !important;
+    border: none !important;
+    background: #EDF0F5 0% 0% no-repeat padding-box;
+    font-size: 12px !important;
+}
+
+#fetchedDataTable_wrapper .table .table-bordered .no-footer .dataTable {
+    border: none !important;
+}
+
+#fetchedDataTable_wrapper table.dataTable thead th {
+    padding: 10px 12px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    padding-top: 1.25rem;
+    text-align: center !important;
+    float: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0em !important;
+}
+
+.paginate_button.previous.disabled,
+.paginate_button.next.disabled {
+    padding: 0.5rem !important;
+}
+
+table.dataTable.no-footer {
+    border: none !important;
+}
+
+.modal-radio-btns {
+    margin-bottom: 10px !important;
+    background: #D6DBE2 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    padding: 0.5rem 1rem;
+}
+
+.modal-radio-btns div {
+    font-size: 12px !important;
+}
+
+.remove-selected-values {
+    font-size: 12px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.selected-modal-values {
+    margin-right: 1.5rem;
+    margin-left: 0.75rem;
+    width: 85%;
+}
+
 
 @media screen and (min-width: 769px) {
     .nav-bar-fix {
