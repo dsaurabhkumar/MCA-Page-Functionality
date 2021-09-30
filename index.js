@@ -160,6 +160,7 @@ $(document).ready(function () {
         }
         if ($(this).is(':checked')) {
             let id = $(this).data('id');
+            $('#modal-add-btn').removeAttr('disabled');
             var foundValue = checkedValues.filter(obj => obj.id === id);
             if (!foundValue.length) {
                 let obj = {
