@@ -224,10 +224,4 @@ $(document).ready(function () {
             $(".modal-add-btn").removeClass("darkHeader");
         }
     });
-
-
-    if($('#selectedCheckboxesValue').hasClass('modal-radio-btns')) {
-        debugger
-        $('#info').addClass('show-info');
-    }
 })
