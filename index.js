@@ -182,10 +182,13 @@ $(document).ready(function () {
         $("#nicCodeModal").modal("hide");
         let html = '';
         $.each(checkedValues, function (inx, val) {
-            html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns">
+            if(inx) {
+                $('#info').removeClass('d-none');
+            }
+            html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns" id="checked-radio-values">
                                 <input class="form-check-input" type="radio" name="selectedRadioOption" id="inlineRadio7${val.id}"
                                 value="${val.id}" data-label="${val.title}">
-                                <label class="form-check-label" for="inlineRadio7${val.id}">${val.id}, 
+                                <label class="form-check-label" for="inlineRadio7${val.id}"><span class="selected-value-id">${val.id}</span>, 
                                     <div class="selected-modal-values">
                                     ${val.title}
                                     </div>
@@ -197,6 +200,7 @@ $(document).ready(function () {
         checkedValues = [];
     })
 
+
     $(document).on('click', '[name="selectedRadioOption"]', function () {
         $('#searchField2').val($(this).val())
         $('#searchField3').val($(this).data('label'))
@@ -204,7 +208,10 @@ $(document).ready(function () {
 })
 
 function removeDiv(elem) {
-    $(elem).parent('div').remove();
+    $(elem).closest('div').remove();
+    if(!$('#checked-radio-values').length) {
+        $('#info').addClass('d-none');
+    }
 }
 
 $(document).ready(function () {
@@ -216,4 +223,10 @@ $(document).ready(function () {
             $(".modal-add-btn").removeClass("darkHeader");
         }
     });
+
+
+    if($('#selectedCheckboxesValue').hasClass('modal-radio-btns')) {
+        debugger
+        $('#info').addClass('show-info');
+    }
 })

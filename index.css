@@ -322,7 +322,7 @@ input[type=text] {
 }
 
 .custom-radio-check>input[type="radio"]:checked+*::before {
-    background: radial-gradient(#127ABF 0%, #127ABF 26%, transparent 12%, transparent);
+    background: radial-gradient(#127ABF 0%, #127ABF 24%, transparent 12%, transparent);
 }
 
 .custom-radio-check {
@@ -662,7 +662,7 @@ table.dataTable {
 
 input[type="search"] {
     border: none !important;
-    padding-top: 10px;
+    padding-top: 5px;
     width: 100%;
     height: 40px;
 }
@@ -725,8 +725,30 @@ table.dataTable.no-footer {
 
 .selected-modal-values {
     margin-right: 1.5rem;
-    margin-left: 0.75rem;
+    margin-left: 0.25rem;
     width: 85%;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+.selected-value-id {
+    font-size: 12px;
+}
+
+#info {
+    display: flex;
+}
+
+#info p {
+    font-size: 10px;
+    letter-spacing: 0.25px;
+    color: #333333;
+    position: relative;
+    top: 6px;
+    margin-left: 5px;
 }
 
 
