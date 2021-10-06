@@ -101,6 +101,7 @@ function ajaxCall(searchKey) {
                 oLanguage: {
                     "sSearch": ""
                 },
+                searchHighlight: true,
                 data: data,
                 columns: [
                     {
@@ -117,8 +118,20 @@ function ajaxCall(searchKey) {
             })
         },
         complete: function () {
+            console.log('compltee function')
             $('.dataTables_filter input').val(searchKey);
             $('.dataTables_filter input').keyup();
+            $.each($('#fetchedDataTable tbody tr td:first-child input[type="checkbox"]'), function () {
+                const checkboxId = $(this).data('id');
+                var foundValue = checkedValues.filter(obj => obj.id === checkboxId);
+                if (foundValue.length) {
+                    $(this).trigger('click');
+                }
+            })
+            if (!checkedValues.length) {
+                $('#modal-add-btn').attr('disabled', true);
+            }
+            checkedValues = [];
         }
     })
 }
@@ -177,18 +190,27 @@ $(document).ready(function () {
                 checkedValues.splice(index, 1)
             }
         }
+        if (checkedValues.length) {
+            $('#modal-add-btn').removeAttr('disabled');
+        } else {
+            $('#modal-add-btn').attr('disabled', true);
+        }
     });
 
     $(document).on('click', '#modal-add-btn', function () {
         $("#nicCodeModal").modal("hide");
         let html = '';
+        let searchField2Value = [];
+        let searchField3Value = [];
         $.each(checkedValues, function (inx, val) {
-            if(inx) {
+            searchField2Value.push(val.id);
+            searchField3Value.push(val.title);
+            if (inx) {
                 $('#info').removeClass('d-none');
             }
             html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns" id="checked-radio-values">
                                 <input class="form-check-input" type="radio" name="selectedRadioOption" id="inlineRadio7${val.id}"
-                                value="${val.id}" data-label="${val.title}">
+                                value="${val.id}" data-label="${val.title}" ${(inx === 0) ? 'checked' : ''}>
                                 <label class="form-check-label" for="inlineRadio7${val.id}"><span class="selected-value-id">${val.id}</span>, 
                                     <div class="selected-modal-values">
                                     ${val.title}
@@ -197,10 +219,16 @@ $(document).ready(function () {
                                 <span class="remove-selected-values" ${val.id} onClick="removeDiv(this)">X</span>
                             </div> `
         })
+        searchField2Value = searchField2Value.join(', ');
+        searchField3Value = searchField3Value.join(', ');
+        $('#searchField2').val(searchField2Value);
+        $('#searchField3').val(searchField3Value);
         $('#selectedCheckboxesValue').html(html);
-        checkedValues = [];
+        // $(document).find('[name="selectedRadioOption"]:first').trigger('click');
+        if (checkedValues.length) {
+            $('#searchField1').attr('disabled', true);
+        }
     })
-
 
     $(document).on('click', '[name="selectedRadioOption"]', function () {
         $('#searchField2').val($(this).val())
@@ -209,8 +237,27 @@ $(document).ready(function () {
 })
 
 function removeDiv(elem) {
+    const dataId = $(elem).siblings('input[type="radio"]').val();
+    const isChecked = $(elem).siblings('input[type="radio"]').is(':checked');
+    var foundId = checkedValues.filter(obj => obj.id == dataId);
+    if (foundId.length) {
+        let index = checkedValues.findIndex(x => x.id == dataId);
+        checkedValues.splice(index, 1)
+    }
+    if (isChecked) {
+        $('#searchField2').val('');
+        $('#searchField3').val('');
+    }
+
+    if (checkedValues.length) {
+        $('#searchField1').attr('disabled', true);
+    } else {
+        $('#searchField1').attr('disabled', false);
+    }
+
+
     $(elem).closest('div').remove();
-    if(!$('#checked-radio-values').length) {
+    if (!$('#checked-radio-values').length) {
         $('#info').addClass('d-none');
     }
 }
