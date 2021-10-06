@@ -483,7 +483,6 @@ tbody:last-child {
     border-bottom: none;
 }
 
-
 #exampleFormControlSelect1-button {
     display: block;
     width: 100% !important;
@@ -749,6 +748,11 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     position: relative;
     top: 6px;
     margin-left: 5px;
+}
+
+table.dataTable span.highlight {
+    background-color: #E2E2E2;
+    border-radius: 3px;
 }
 
 
