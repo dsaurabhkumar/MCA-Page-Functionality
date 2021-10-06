@@ -231,9 +231,26 @@ $(document).ready(function () {
     })
 
     $(document).on('click', '[name="selectedRadioOption"]', function () {
-        $('#searchField2').val($(this).val())
-        $('#searchField3').val($(this).data('label'))
-    })
+        let id = $(this).val();
+        $.each(checkedValues, function(inx, data){
+          if(data.id == id) {
+            checkedValues.splice(inx, 1);
+            checkedValues.unshift(data);
+          }
+          
+        });
+        
+          let searchField2Value = [];
+          let searchField3Value = [];
+          $.each(checkedValues, function (inx, val) {
+            searchField2Value.push(val.id);
+            searchField3Value.push(val.title);
+          });
+          searchField2Value = searchField2Value.join(', ');
+          searchField3Value = searchField3Value.join(', ');
+          $('#searchField2').val(searchField2Value);
+          $('#searchField3').val(searchField3Value);
+      })
 })
 
 function removeDiv(elem) {
