@@ -118,7 +118,6 @@ function ajaxCall(searchKey) {
             })
         },
         complete: function () {
-            console.log('compltee function')
             $('.dataTables_filter input').val(searchKey);
             $('.dataTables_filter input').keyup();
             $.each($('#fetchedDataTable tbody tr td:first-child input[type="checkbox"]'), function () {
@@ -232,25 +231,25 @@ $(document).ready(function () {
 
     $(document).on('click', '[name="selectedRadioOption"]', function () {
         let id = $(this).val();
-        $.each(checkedValues, function(inx, data){
-          if(data.id == id) {
-            checkedValues.splice(inx, 1);
-            checkedValues.unshift(data);
-          }
-          
+        $.each(checkedValues, function (inx, data) {
+            if (data.id == id) {
+                checkedValues.splice(inx, 1);
+                checkedValues.unshift(data);
+            }
+
         });
-        
-          let searchField2Value = [];
-          let searchField3Value = [];
-          $.each(checkedValues, function (inx, val) {
+
+        let searchField2Value = [];
+        let searchField3Value = [];
+        $.each(checkedValues, function (inx, val) {
             searchField2Value.push(val.id);
             searchField3Value.push(val.title);
-          });
-          searchField2Value = searchField2Value.join(', ');
-          searchField3Value = searchField3Value.join(', ');
-          $('#searchField2').val(searchField2Value);
-          $('#searchField3').val(searchField3Value);
-      })
+        });
+        searchField2Value = searchField2Value.join(', ');
+        searchField3Value = searchField3Value.join(', ');
+        $('#searchField2').val(searchField2Value);
+        $('#searchField3').val(searchField3Value);
+    })
 })
 
 function removeDiv(elem) {
