@@ -876,3 +876,7 @@ table.dataTable span.highlight {
         width: 75%;
     }
 }
+
+.event-none {
+    pointer-events: none;
+}

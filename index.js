@@ -71,13 +71,13 @@ $(function () {
 
     $("#searchIcon").click(() => {
         $("#nicCodeModal").modal("show");
-        let searchKey = event.target.value;
+        let searchKey = $('#searchField1').val();
         ajaxCall(searchKey);
     });
     $("#searchField1").keypress(function (e) {
         if (e.keyCode == 13) {
             $("#nicCodeModal").modal("show");
-            let searchKey = event.target.value;
+            let searchKey = e.target.value;
             ajaxCall(searchKey);
         }
     });
@@ -97,6 +97,7 @@ function ajaxCall(searchKey) {
                 oLanguage: {
                     "sSearch": ""
                 },
+                bPaginate: false,
                 searchHighlight: true,
                 data: data,
                 columns: [
@@ -126,7 +127,7 @@ function ajaxCall(searchKey) {
             if (!checkedValues.length) {
                 $('#modal-add-btn').attr('disabled', true);
             }
-            checkedValues = [];
+            // checkedValues = [];
         }
     })
 }
@@ -162,7 +163,7 @@ $(function () {
 $(document).ready(function () {
     checkedValues = [];
     $(document).on('change', '.checked-buttons', function () {
-        if ($('.checked-buttons:checked').length > 3) {
+        if (checkedValues.length >= 3) {
             this.checked = false;
             return false
         }
@@ -192,6 +193,10 @@ $(document).ready(function () {
         }
     });
 
+
+    
+
+
     $(document).on('click', '#modal-add-btn', function () {
         $("#nicCodeModal").modal("hide");
         let html = '';
@@ -210,8 +215,8 @@ $(document).ready(function () {
                                     <div class="selected-modal-values">
                                     ${val.title}
                                     </div>
-                                </label>
-                                <span class="remove-selected-values" ${val.id} onClick="removeDiv(this)">X</span>
+                                    </label>
+                                    <span class="remove-selected-values" ${val.id} onClick="removeDiv(this)">X</span>
                             </div> `
         })
         searchField2Value = searchField2Value.join(', ');
@@ -222,8 +227,10 @@ $(document).ready(function () {
         // $(document).find('[name="selectedRadioOption"]:first').trigger('click');
         if (checkedValues.length == '3') {
             $('#searchField1,#searchIcon').attr('disabled', true);
+            $('#searchIcon').addClass('event-none');
         } else {
             $('#searchField1,#searchIcon').attr('disabled', false);
+            $('#searchIcon').removeClass('event-none');
         }
     })
 
@@ -261,18 +268,45 @@ function removeDiv(elem) {
         $('#searchField2').val('');
         $('#searchField3').val('');
     }
-
     if (checkedValues.length == '3') {
         $('#searchField1,#searchIcon').attr('disabled', true);
+        $('#searchIcon').addClass('event-none');
     } else {
         $('#searchField1,#searchIcon').attr('disabled', false);
+        $('#searchIcon').removeClass('event-none');
     }
-
-
     $(elem).closest('div').remove();
     if (!$('#checked-radio-values').length) {
         $('#info').addClass('d-none');
     }
+    let searchField2Value = [];
+        let searchField3Value = [];
+        $.each(checkedValues, function (inx, val) {
+            searchField2Value.push(val.id);
+            searchField3Value.push(val.title);
+        });
+        searchField2Value = searchField2Value.join(', ');
+        searchField3Value = searchField3Value.join(', ');
+        $('#searchField2').val(searchField2Value);
+        $('#searchField3').val(searchField3Value);
+
+        var html = '';
+        $.each(checkedValues, function (inx, val) {
+            // if (inx) {
+            //     $('#info').removeClass('d-none');
+            // }
+            html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns" id="checked-radio-values">
+                                <input class="form-check-input" type="radio" name="selectedRadioOption" id="inlineRadio7${val.id}"
+                                value="${val.id}" data-label="${val.title}" ${(inx === 0) ? 'checked' : ''}>
+                                <label class="form-check-label" for="inlineRadio7${val.id}"><span class="selected-value-id">${val.id}</span>, 
+                                    <div class="selected-modal-values">
+                                    ${val.title}
+                                    </div>
+                                </label>
+                                <span class="remove-selected-values" ${val.id} onClick="removeDiv(this)">X</span>
+                            </div> `
+        })
+        $('#selectedCheckboxesValue').html(html);
 }
 
 $(document).ready(function () {
