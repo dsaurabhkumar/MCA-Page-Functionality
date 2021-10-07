@@ -43,12 +43,10 @@ $(function () {
         resetSrNo("#maintable");
     });
 })
-
 $("#deleteRows").on("click", function () {
     $('input:checked').parents("tr").remove();
     resetSrNo("#maintable");
 });
-
 function resetSrNo(tableId) {
     $.each($(tableId).find('tbody tr'), function (index, trEL) {
         $(trEL).find('td:eq(1)').text(index + 1);
@@ -56,7 +54,6 @@ function resetSrNo(tableId) {
         $(trEL).find('td:eq(0) [type="checkbox"]').attr('id', randomId).siblings('label').attr('for', randomId);
     })
 }
-
 function genRandomStr() {
     var str = '';
     var strings = '1234567890';
@@ -69,16 +66,14 @@ function genRandomStr() {
 $(function () {
     $("#speed").selectmenu();
     $("#files").selectmenu();
-    $(".exampleFormControlSelect1")
-        .selectmenu()
-        .selectmenu("menuWidget");
+    $(".exampleFormControlSelect1").selectmenu().selectmenu("menuWidget");
+
 
     $("#searchIcon").click(() => {
         $("#nicCodeModal").modal("show");
         let searchKey = event.target.value;
         ajaxCall(searchKey);
     });
-
     $("#searchField1").keypress(function (e) {
         if (e.keyCode == 13) {
             $("#nicCodeModal").modal("show");
@@ -92,6 +87,7 @@ function ajaxCall(searchKey) {
 
     $('#fetchedDataTable').dataTable().fnClearTable();
     $('#fetchedDataTable').dataTable().fnDestroy();
+
     const endpoint = `https://jsonplaceholder.typicode.com/albums`;
     $.ajax({
         url: endpoint,
@@ -224,8 +220,10 @@ $(document).ready(function () {
         $('#searchField3').val(searchField3Value);
         $('#selectedCheckboxesValue').html(html);
         // $(document).find('[name="selectedRadioOption"]:first').trigger('click');
-        if (checkedValues.length) {
-            $('#searchField1').attr('disabled', true);
+        if (checkedValues.length == '3') {
+            $('#searchField1,#searchIcon').attr('disabled', true);
+        } else {
+            $('#searchField1,#searchIcon').attr('disabled', false);
         }
     })
 
@@ -236,7 +234,6 @@ $(document).ready(function () {
                 checkedValues.splice(inx, 1);
                 checkedValues.unshift(data);
             }
-
         });
 
         let searchField2Value = [];
@@ -265,10 +262,10 @@ function removeDiv(elem) {
         $('#searchField3').val('');
     }
 
-    if (checkedValues.length) {
-        $('#searchField1').attr('disabled', true);
+    if (checkedValues.length == '3') {
+        $('#searchField1,#searchIcon').attr('disabled', true);
     } else {
-        $('#searchField1').attr('disabled', false);
+        $('#searchField1,#searchIcon').attr('disabled', false);
     }
 
 
