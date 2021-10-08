@@ -298,7 +298,7 @@ function removeDiv(elem) {
         if (inx) {
             $('#info').removeClass('d-none');
         }
-        html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns p-0" id="checked-radio-values">
+        html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns p-0">
                                 <input class="form-check-input" type="radio" name="selectedRadioOption" id="inlineRadio7${val.id}"
                                 value="${val.id}" data-label="${val.title}" ${(inx === 0) ? 'checked' : ''}>
                                 <label class="form-check-label p-2" for="inlineRadio7${val.id}"><span class="selected-value-id">${val.id}</span>, 
