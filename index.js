@@ -206,7 +206,7 @@ $(document).ready(function () {
         $.each(checkedValues, function (inx, val) {
             searchField2Value.push(val.id);
             searchField3Value.push(val.title);
-            if (inx) {
+            if (checkedValues) {
                 $('#info').removeClass('d-none');
             }
             html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns p-0" id="checked-radio-values">
@@ -226,7 +226,6 @@ $(document).ready(function () {
         $('#searchField2').val(searchField2Value);
         $('#searchField3').val(searchField3Value);
         $('#selectedCheckboxesValue').html(html);
-        // $(document).find('[name="selectedRadioOption"]:first').trigger('click');
         if (checkedValues.length == '3') {
             $('#searchField1,#searchIcon').attr('disabled', true);
             $('#searchIcon').addClass('event-none');
@@ -295,7 +294,7 @@ function removeDiv(elem) {
 
     var html = '';
     $.each(checkedValues, function (inx, val) {
-        if (inx) {
+        if (checkedValues) {
             $('#info').removeClass('d-none');
         }
         html += ` <div class="form-check form-check-inline custom-radio-check modal-radio-btns p-0">
